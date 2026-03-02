@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fashionnova/RastreaTuPedido</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="menu container">
+            <a href="#" class="logo">FashionNova</a>
+            <input type="checkbox" id="menu">
+            <label for="menu">
+              <img src="c:\Users\Tania\Downloads\menu (1).png" class="menu-icono"    alt="menu">
+            </label>
+            <nav class="navbar">
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="productos.html">Productos</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                    <li><a href="gps.html">Rastrea tu pedido</a></li>
+                    <li class="submenu">
+                </ul>
+            </nav>
+        </div>
+        <br>
+        <br>
+    </header>
+    
+    <div id="map"></div>
+    
+    <div class="controls">
+        <button onclick="moveBack()">⬅️ Retroceder</button>
+        <button onclick="moveForward()">Avanzar ➡️</button>
+    </div>
+
+    <script>
+        // Crear el mapa centrado en Manizales
+        var map = L.map('map').setView([5.0689, -75.5174], 14); 
+
+        // Agregar capa de OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Crear un marcador inicial en la ubicación del pedido
+        var marker = L.marker([5.0689, -75.5174]).addTo(map)
+            .bindPopup("Pedido en camino")
+            .openPopup();
+
+        // Ruta simulada del pedido en Manizales
+        var route = [
+            [5.0689, -75.5174], // Punto inicial - Centro
+            [5.0632, -75.5252], // Cable Plaza
+            [5.0585, -75.5350], // Universidad Nacional
+            [5.0520, -75.5450], // Barrio La Francia (Destino final)
+        ];
+
+        var index = 0;
+
+        // Función para mover hacia adelante
+        function moveForward() {
+            if (index < route.length - 1) {
+                index++;
+                updateMarker();
+            }
+        }
+
+        // Función para mover hacia atrás
+        function moveBack() {
+            if (index > 0) {
+                index--;
+                updateMarker();
+            }
+        }
+
+        // Actualizar marcador y centrar mapa
+        function updateMarker() {
+            marker.setLatLng(route[index]);
+            map.panTo(route[index]);
+        }
+    </script>
+</body>
+</html>

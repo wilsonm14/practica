@@ -95,7 +95,7 @@ img {
 }
 .footer-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
 }
 .link h3 {
     color: #ffffff;
